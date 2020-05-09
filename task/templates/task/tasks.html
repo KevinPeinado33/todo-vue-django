@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+{% verbatim %}
 <div id="app">
     <form>
         <div class="form-group row">
@@ -17,7 +19,7 @@
     <div class="mt-5">
         <div class="card">
             <div class="card-body">
-                Aun esta vacio uwu
+                {{ task }}
                 <button type="button" class="close float-right">
                     <span>&times;</span>
                 </button>
@@ -25,4 +27,6 @@
         </div>
     </div>
 </div>
+
+{% endverbatim %}
 {% endblock content %}
