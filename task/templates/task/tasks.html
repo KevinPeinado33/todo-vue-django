@@ -17,10 +17,14 @@
     </form>
 
     <div class="mt-5">
-        <div class="card mb-2" v-for="task in tasks">
+        <div 
+            class="card mb-2" 
+            v-for="(task, index) in taskList"
+            @click="completeTask(task.id, index)"
+            :class="{'completed': task.completed}">
             <div class="card-body">
                 {{ task.title }}
-                <button type="button" class="close float-right">
+                <button type="button" class="close float-right" @click.stop="deleteTask(task.id, index)">
                     <span>&times;</span>
                 </button>
             </div>

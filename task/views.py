@@ -24,3 +24,16 @@ class TaskView(View):
             return JsonResponse({'task': model_to_dict(new_task)}, status=200)
         
         return redirect('tasks_list_url')
+
+class TaskComplete(View):
+    def post(self, request, id):
+        task = Task.objects.get(id=id)
+        task.completed = True
+        task.save()
+        return JsonResponse({'task':model_to_dict(task)}, status=200)
+
+class TaskDelete(View):
+    def post(self, request, id):
+        task = Task.objects.get(id=id)
+        task.delete()
+        return JsonResponse({'result':'ok'}, status=200)

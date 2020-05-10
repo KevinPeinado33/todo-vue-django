@@ -17,13 +17,25 @@ const app = new Vue({
         tasks: []
     },
     created() {
-        console.log("estoy probando al cargar la pagina");
         this.loadTasks();
-        console.log(this.tasks);
+    },
+    computed: {
+        taskList() {
+            function compare(a, b){
+                if(a.completed > b.completed) {
+                    return 1;
+                }
+                if(a.completed < b.completed) {
+                    return -1;
+                }
+                return 0;
+            }
+            return this.tasks.sort(compare);
+        }
     },
     methods: {
         loadTasks() {
-            sendRequest('','get')
+            sendRequest('', 'get')
                 .then((response) => {
                     this.tasks = response.data.tasks;
                 });
@@ -37,6 +49,19 @@ const app = new Vue({
                     this.tasks.push(response.data.task);
                     this.task = '';
                 });
-        }        
+        },
+        completeTask(id, index) {
+            sendRequest(`${id}/complete/`,'post')
+                .then((response) => {
+                    this.tasks.splice(index,1);
+                    this.tasks.push(response.data.task);
+                })
+        },
+        deleteTask(id, index) {
+            sendRequest(`${id}/delete/`,'post')
+                .then((response) => {
+                    this.tasks.splice(index, 1);
+                })
+        }
     }
 })
